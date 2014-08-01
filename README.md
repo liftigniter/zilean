@@ -25,11 +25,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats wikihow {DATE}",
-                "datasets" : "doc_metrics/daily/wikihow/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/wikihow/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats wikihow {DATE}",
-                "datasets" : "activities/wikihow/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/wikihow/{-6,0}/_SUCCESS"
             }
         ]
     },
@@ -50,11 +50,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats coderwall {DATE}",
-                "datasets" : "doc_metrics/daily/coderwall/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/coderwall/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats coderwall {DATE}",
-                "datasets" : "activities/coderwall/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/coderwall/{-6,0}/_SUCCESS"
             }
         ]
     },
@@ -67,7 +67,7 @@ Spark Job Manager
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics hypster {DATE}",
-                "datasets" : "new_activities/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "new_activities/hypster/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats hypster {DATE}",
@@ -75,11 +75,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats hypster {DATE}",
-                "datasets" : "doc_metrics/daily/hypster/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/hypster/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats hypster {DATE}",
-                "datasets" : "activities/hypster/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/hypster/{-6,0}/_SUCCESS"
             }
         ]
     },
@@ -92,7 +92,7 @@ Spark Job Manager
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics findly-sears {DATE}",
-                "datasets" : "new_activities/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "new_activities/findly-sears/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats findly-sears {DATE}",
@@ -100,11 +100,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats findly-sears {DATE}",
-                "datasets" : "doc_metrics/daily/findly-sears/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/findly-sears/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats findly-sears {DATE}",
-                "datasets" : "activities/findly-sears/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/findly-sears/{-6,0}/_SUCCESS"
             }
         ]
     },
@@ -117,7 +117,7 @@ Spark Job Manager
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics teespring {DATE}",
-                "datasets" : "new_activities/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "new_activities/teespring/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats teespring {DATE}",
@@ -125,11 +125,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats teespring {DATE}",
-                "datasets" : "doc_metrics/daily/teespring/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/teespring/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats teespring {DATE}",
-                "datasets" : "activities/teespring/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/teespring/{-6,0}/_SUCCESS"
             }
         ]
     },
@@ -142,7 +142,7 @@ Spark Job Manager
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics listia {DATE}",
-                "datasets" : "new_activities/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "new_activities/listia/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats listia {DATE}",
@@ -150,11 +150,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats listia {DATE}",
-                "datasets" : "doc_metrics/daily/listia/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/listia/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats listia {DATE}",
-                "datasets" : "activities/listia/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/listia/{-6,0}/_SUCCESS"
             }
         ]
     },
@@ -167,7 +167,7 @@ Spark Job Manager
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics twitch {DATE}",
-                "datasets" : "new_activities/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "new_activities/twitch/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats twitch {DATE}",
@@ -175,11 +175,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats twitch {DATE}",
-                "datasets" : "doc_metrics/daily/twitch/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/twitch/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats twitch {DATE}",
-                "datasets" : "activities/twitch/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/twitch/{-6,0}/_SUCCESS"
             }
         ]
     },
@@ -192,7 +192,7 @@ Spark Job Manager
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics about {DATE}",
-                "datasets" : "new_activities/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "new_activities/about/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats about {DATE}",
@@ -200,11 +200,11 @@ Spark Job Manager
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats about {DATE}",
-                "datasets" : "doc_metrics/daily/about/{-6,0}/_SUCCESS"
+                "datasets" : "dashboard/daily/about/{-6,0}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats about {DATE}",
-                "datasets" : "activities/about/{-6,0}/*"
+                "datasets" : "doc_metrics/daily/about/{-6,0}/_SUCCESS"
             }
         ]
     }
