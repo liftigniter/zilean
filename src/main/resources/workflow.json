@@ -103,27 +103,27 @@
         ]
     },
     {
-        "property" : "teespring",
+        "property" : "upworthy",
         "start" : "27-07-2014 0300",
         "end" : "27-08-2015 0300",
         "repeat" : 1440,
         "expires" : 2880,
         "actions" : [
             {
-                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics teespring {DATE}",
-                "datasets" : "new_activity/teespring/{DATE}/_SUCCESS"
+                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics upworthy {DATE}",
+                "datasets" : "new_activity/upworthy/{DATE}/_SUCCESS"
             },
             {
-                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats teespring {DATE}",
-                "datasets" : "doc_metrics/daily/teespring/{DATE}/_SUCCESS"
+                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats upworthy {DATE}",
+                "datasets" : "doc_metrics/daily/upworthy/{DATE}/_SUCCESS"
             },
             {
-                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats teespring {DATE}",
-                "datasets" : "dashboard/daily/teespring/{-6,0}/overview_stats_1d.csv"
+                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats upworthy {DATE}",
+                "datasets" : "dashboard/daily/upworthy/{-6,0}/overview_stats_1d.csv"
             },
             {
-                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats teespring {DATE}",
-                "datasets" : "doc_metrics/daily/teespring/{-6,0}/_SUCCESS"
+                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats upworthy {DATE}",
+                "datasets" : "doc_metrics/daily/upworthy/{-6,0}/_SUCCESS"
             }
         ]
     },
