@@ -24,35 +24,37 @@ class ExecutorActor extends Actor with akka.actor.ActorLogging {
   def receive = {
     case Ticker => print(".")
     case RunJob => {
-      println("\nJob queue size: " + Global.jobQueue.flows.size)
+      println()
+      log.info("Job queue size: " + Global.jobQueue.flows.size)
       Global.jobQueue.current() match {
         case Some(wf) => {
-          println(wf.property)
+          log.info(wf.property)
           // 0 = OK
           // 1 = FAILED
           // 2 = PENDING (data not available yet)
           var status = 0
 
-          println("Should start? " + wf.shouldStart())
+          log.info("Should start? " + wf.shouldStart())
           if (!wf.shouldStart) {
             status = 2
           }
-          println("Expired? " + wf.isExpired())
+          log.info("Expired? " + wf.isExpired())
           if (wf.isExpired) {
             status = 1
             log.error("JOB FAILED: Expired")
           }
           while(status == 0 && wf.remains.size > 0) {
             if (wf.remains.front.dataAvailable) {
+              log.info("Execute: " + wf.remains.front.command)
               val result = wf.remains.front.execute()
               if (result) {
                 wf.actionDone()
-                println("Size: " + wf.remains.size)
+                log.info("Remaining actions: " + wf.remains.size)
               } else {
                 status = 1
               }
             } else {
-//              println("Data not available!!")
+              log.info("Data not available!!")
               status = 2
             }
           }
@@ -123,7 +125,7 @@ object AkkaScheduler extends App {
     system.scheduler.schedule(30.seconds, 1.minutes, executor, RunJob)
 
     // Every 10 minutes send a CreateJob message, actor create a job if possible
-    system.scheduler.schedule(10.seconds, 1.minutes, manager, CreateJob)
+    system.scheduler.schedule(10.seconds, 2.minutes, manager, CreateJob)
 
     // Every hour check and add new workflow to queue
   }

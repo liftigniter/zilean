@@ -26,8 +26,15 @@ class JobQueueSpec extends FunSuite {
       dataSets = List("tmp/guan/READMEssss1.md")
     )
 
+    val action4 = Action(
+      command = "",
+      dataSets = List("new_activity/coderwall/27-07-2014/_SUCCESS")
+    )
+
     assert(action1.dataAvailable, true)
     assert(action2.dataAvailable, true)
-    assert(action2.dataAvailable, false)
+    assert(!action3.dataAvailable, true)
+    assert(action4.dataAvailable, true)
+
   }
 }
