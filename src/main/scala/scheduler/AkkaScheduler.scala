@@ -11,6 +11,7 @@ import scala.concurrent.ExecutionContext.Implicits._
 case object RunJob
 case object Ticker
 case object CreateJob
+case object CleanUp
 
 
 object Constants {
@@ -88,6 +89,15 @@ class JobManagerActor extends Actor with akka.actor.ActorLogging {
         }
       }
     }
+    case CleanUp => {
+      scala.io.Source.fromFile("/root/spark-ec2/slaves").getLines().foreach { line =>
+        val host = line.trim
+        val cmd = s"ssh $host rm -rf /root/spark/work/*"
+        log.info(s"running $cmd")
+        val result = CmdUtil.run(cmd)
+        log.info("success? " + result)
+      }
+    }
   }
 }
 
@@ -126,6 +136,9 @@ object AkkaScheduler extends App {
 
     // Every 10 minutes send a CreateJob message, actor create a job if possible
     system.scheduler.schedule(10.seconds, 2.minutes, manager, CreateJob)
+
+    // Every 1 hour, clean up slave work log
+    system.scheduler.schedule(1.hour, 1.hour, manager, CleanUp)
 
     // Every hour check and add new workflow to queue
   }
