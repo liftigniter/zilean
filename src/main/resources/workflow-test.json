@@ -1,0 +1,42 @@
+[
+    {
+        "property" : "wikihow",
+        "start" : "27-07-2014 2100",
+        "end" : "27-08-2015 2100",
+        "repeat" : 120,
+        "expires" : 12880,
+        "actions" : [
+            {
+                "command" : "echo '------------TESTING(1) 1------------'"
+            },
+            {
+                "command" : "echo '------------TESTING(1) {DATE} 2------------'",
+                "datasets" : "activities/wikihow/{DATE}/*"
+            },
+            {
+                "command" : "echo '------------TESTING(1) {DATE} 3------------'",
+                "datasets" : "doc_metrics/daily/wikihow/{DATE}/_SUCCESS"
+            },
+            {
+                "command" : "echo '------------TESTING(1) {DATE} 4------------'",
+                "datasets" : "doc_metrics/daily/wikihow/{-1,0}/_SUCCESS"
+            }
+        ]
+    },
+    {
+        "property" : "upworthy",
+        "start" : "27-07-2014 2100",
+        "end" : "27-08-2015 2100",
+        "repeat" : 1440,
+        "expires" : 2880,
+        "actions" : [
+            {
+                "command" : "echo '------------TESTING(2) 1------------'"
+            },
+            {
+                "command" : "echo '------------TESTING(2) {DATE} 2------------'",
+                "datasets" : "activities/wikihow/{DATE}/*"
+            }
+        ]
+    }
+]

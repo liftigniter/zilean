@@ -1,0 +1,13 @@
+logs
+conf/prod.conf
+project/project
+project/target
+target
+tmp
+dist
+*.iml
+*.ipr
+*.iws
+*.pub
+.*
+!.gitignore
