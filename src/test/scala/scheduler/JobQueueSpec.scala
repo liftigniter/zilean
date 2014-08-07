@@ -29,7 +29,7 @@ class JobQueueSpec extends FunSuite {
 
     val fmt = org.joda.time.format.DateTimeFormat.forPattern("dd-MM-YYYY").withZone(org.joda.time.DateTimeZone.forID("US/Pacific"))
 
-    val actConf = ActionConfig("echo", Some("dashboard/daily/about/{-6,0}/overview_stats_1d.csv"))
+    val actConf = ActionConfig("echo", Some("dashboard/daily/about/{-6,0}/overview_stats_1d.csv"), Some("dashboard/daily/about/{DATE}/overview_stats_1d.csv"))
 
     val action4 = actConf.toAction(fmt.parseDateTime("04-08-2014"))
 
@@ -39,6 +39,7 @@ class JobQueueSpec extends FunSuite {
     assert(action2.dataAvailable, true)
     assert(!action3.dataAvailable, true)
     assert(action4.dataAvailable, true)
+    assert(action4.isDone, true)
 
 
 

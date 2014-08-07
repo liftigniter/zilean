@@ -27,7 +27,7 @@ case class WorkflowConfig(property: String, start: String, end: String, repeat: 
   }
 }
 
-case class ActionConfig(command: String, datasets: Option[String]) {
+case class ActionConfig(command: String, datasets: Option[String], output: Option[String] = None) {
   def toAction(date: DateTime): Action = {
     val fmt = org.joda.time.format.DateTimeFormat.forPattern("dd-MM-YYYY").withZone(org.joda.time.DateTimeZone.forID("US/Pacific"))
     val Ptrn1 = """[^\{]+\{DATE\}[^\}]+""".r
@@ -35,13 +35,14 @@ case class ActionConfig(command: String, datasets: Option[String]) {
     val ReplacePtrn = """\{[0-9,-]+\}""".r
 
     val cmd = command.replace("{DATE}", fmt.print(date))
+    val op = output.map(_.replace("{DATE}", fmt.print(date)))
 
     datasets match {
       case Some(ds) =>  {
           ds match {
             case Ptrn1() => {  // e.g. activities/wikihow/{DATE}/*
               val dataPath = ds.replace("{DATE}", fmt.print(date))
-              Action(cmd, List(dataPath))
+              Action(cmd, List(dataPath), op)
             }
             case Ptrn2(m) => {  // e.g. activities/wikihow/{-6,0}/*
               val start = m.split(",")(0).toInt
@@ -49,12 +50,12 @@ case class ActionConfig(command: String, datasets: Option[String]) {
               val dataPath = (start to end).map { i =>
                 ReplacePtrn.replaceAllIn(ds, fmt.print(date.plusDays(i)))
               }.toList
-              Action(cmd, dataPath)
+              Action(cmd, dataPath, op)
             }
-            case _ => Action(cmd, List(ds))
+            case _ => Action(cmd, List(ds), op)
           }
       }
-      case None => Action(cmd, List())
+      case None => Action(cmd, List(), op)
     }
   }
 }

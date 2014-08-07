@@ -26,27 +26,30 @@ class ExecutorActor extends Actor with akka.actor.ActorLogging {
 
           wf.status = Workflow.STATUS_RUNNING
 
-          log.info("Should start? " + wf.shouldStart())
           if (!wf.shouldStart) {
             wf.status = Workflow.STATUS_WAITING
           }
-          log.info("Expired? " + wf.isExpired())
           if (wf.isExpired) {
             wf.status = Workflow.STATUS_FAILED
             wf.failedReason = "Expired on " + wf.expires
           }
           while(wf.status == Workflow.STATUS_RUNNING && wf.remains.size > 0) {
-            if (wf.remains.front.dataAvailable) {
-              val result = wf.remains.front.execute()
-              if (result) {
-                wf.actionDone()
-              } else {
-                wf.status = Workflow.STATUS_FAILED
-                wf.failedReason = "Execute \"" + wf.remains.front.toString + "\" failed"
-              }
+            if (wf.remains.front.isDone) {
+              wf.actionDone()
             } else {
-              log.info("Data not available!!")
-              wf.status = Workflow.STATUS_WAITING
+              if (wf.remains.front.dataAvailable) {
+                PrintUtil("Execute: "+wf.remains.front)
+                val result = wf.remains.front.execute()
+                if (result) {
+                  wf.actionDone()
+                } else {
+                  wf.status = Workflow.STATUS_FAILED
+                  wf.failedReason = "Execute \"" + wf.remains.front.toString + "\" failed"
+                }
+              } else {
+                log.info("Data not available!!")
+                wf.status = Workflow.STATUS_WAITING
+              }
             }
           }
 

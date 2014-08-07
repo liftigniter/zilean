@@ -98,7 +98,8 @@ object Workflow {
 
 case class Action(
   command: String,
-  dataSets: List[String]
+  dataSets: List[String] = List(),
+  output: Option[String] = None
 ) {
 
   def dataAvailable: Boolean = {
@@ -116,6 +117,13 @@ case class Action(
       }
     } else {
       true
+    }
+  }
+
+  def isDone: Boolean = {
+    output match {
+      case Some(op) => S3Util.exists(op)
+      case None => false
     }
   }
 

@@ -7,23 +7,28 @@
         "expires" : 2880,
         "actions" : [
             {
-                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.WikiHowUpdateInventory wikihow"
+                "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.WikiHowUpdateInventory wikihow",
+                "output" : "doc_metrics/daily/wikihow/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics wikihow {DATE}",
-                "datasets" : "activities/wikihow/{DATE}/*"
+                "datasets" : "activities/wikihow/{DATE}/*",
+                "output" : "doc_metrics/daily/wikihow/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats wikihow {DATE}",
-                "datasets" : "doc_metrics/daily/wikihow/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/wikihow/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/wikihow/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats wikihow {DATE}",
-                "datasets" : "dashboard/daily/wikihow/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/wikihow/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/wikihow/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats wikihow {DATE}",
-                "datasets" : "doc_metrics/daily/wikihow/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/wikihow/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/wikihow/{DATE}/leader_board_7d.json"
             }
         ]
     },
@@ -36,19 +41,23 @@
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics coderwall {DATE}",
-                "datasets" : "new_activity/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "new_activity/coderwall/{DATE}/_SUCCESS",
+                "output" : "doc_metrics/daily/coderwall/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats coderwall {DATE}",
-                "datasets" : "doc_metrics/daily/coderwall/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/coderwall/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/coderwall/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats coderwall {DATE}",
-                "datasets" : "dashboard/daily/coderwall/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/coderwall/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/coderwall/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats coderwall {DATE}",
-                "datasets" : "doc_metrics/daily/coderwall/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/coderwall/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/coderwall/{DATE}/leader_board_7d.json"
             }
         ]
     },
@@ -61,19 +70,23 @@
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics hypster {DATE}",
-                "datasets" : "new_activity/hypster/{DATE}/_SUCCESS"
+                "datasets" : "new_activity/hypster/{DATE}/_SUCCESS",
+                "output" : "doc_metrics/daily/hypster/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats hypster {DATE}",
-                "datasets" : "doc_metrics/daily/hypster/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/hypster/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/hypster/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats hypster {DATE}",
-                "datasets" : "dashboard/daily/hypster/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/hypster/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/hypster/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats hypster {DATE}",
-                "datasets" : "doc_metrics/daily/hypster/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/hypster/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/hypster/{DATE}/leader_board_7d.json"
             }
         ]
     },
@@ -86,19 +99,23 @@
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics findly-sears {DATE}",
-                "datasets" : "new_activity/findly-sears/{DATE}/_SUCCESS"
+                "datasets" : "new_activity/findly-sears/{DATE}/_SUCCESS",
+                "output" : "doc_metrics/daily/findly-sears/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats findly-sears {DATE}",
-                "datasets" : "doc_metrics/daily/findly-sears/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/findly-sears/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/findly-sears/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats findly-sears {DATE}",
-                "datasets" : "dashboard/daily/findly-sears/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/findly-sears/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/findly-sears/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats findly-sears {DATE}",
-                "datasets" : "doc_metrics/daily/findly-sears/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/findly-sears/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/findly-sears/{DATE}/leader_board_7d.json"
             }
         ]
     },
@@ -111,19 +128,23 @@
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics upworthy {DATE}",
-                "datasets" : "new_activity/upworthy/{DATE}/_SUCCESS"
+                "datasets" : "new_activity/upworthy/{DATE}/_SUCCESS",
+                "output" : "doc_metrics/daily/upworthy/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats upworthy {DATE}",
-                "datasets" : "doc_metrics/daily/upworthy/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/upworthy/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/upworthy/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats upworthy {DATE}",
-                "datasets" : "dashboard/daily/upworthy/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/upworthy/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/upworthy/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats upworthy {DATE}",
-                "datasets" : "doc_metrics/daily/upworthy/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/upworthy/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/upworthy/{DATE}/leader_board_7d.json"
             }
         ]
     },
@@ -136,19 +157,23 @@
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics listia {DATE}",
-                "datasets" : "new_activity/listia/{DATE}/_SUCCESS"
+                "datasets" : "new_activity/listia/{DATE}/_SUCCESS",
+                "output" : "doc_metrics/daily/listia/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats listia {DATE}",
-                "datasets" : "doc_metrics/daily/listia/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/listia/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/listia/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats listia {DATE}",
-                "datasets" : "dashboard/daily/listia/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/listia/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/listia/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats listia {DATE}",
-                "datasets" : "doc_metrics/daily/listia/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/listia/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/listia/{DATE}/leader_board_7d.json"
             }
         ]
     },
@@ -161,19 +186,23 @@
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics twitch {DATE}",
-                "datasets" : "new_activity/twitch/{DATE}/_SUCCESS"
+                "datasets" : "new_activity/twitch/{DATE}/_SUCCESS",
+                "output" : "doc_metrics/daily/twitch/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats twitch {DATE}",
-                "datasets" : "doc_metrics/daily/twitch/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/twitch/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/twitch/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats twitch {DATE}",
-                "datasets" : "dashboard/daily/twitch/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/twitch/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/twitch/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats twitch {DATE}",
-                "datasets" : "doc_metrics/daily/twitch/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/twitch/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/twitch/{DATE}/leader_board_7d.json"
             }
         ]
     },
@@ -186,19 +215,23 @@
         "actions" : [
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.ActivityToDocMetrics about {DATE}",
-                "datasets" : "new_activity/about/{DATE}/_SUCCESS"
+                "datasets" : "new_activity/about/{DATE}/_SUCCESS",
+                "output" : "doc_metrics/daily/about/{DATE}/_SUCCESS"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.DailyOverviewStats about {DATE}",
-                "datasets" : "doc_metrics/daily/about/{DATE}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/about/{DATE}/_SUCCESS",
+                "output" : "dashboard/daily/about/{DATE}/overview_stats_1d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysOverviewStats about {DATE}",
-                "datasets" : "dashboard/daily/about/{-6,0}/overview_stats_1d.csv"
+                "datasets" : "dashboard/daily/about/{-6,0}/overview_stats_1d.csv",
+                "output" : "dashboard/daily/about/{DATE}/overview_stats_7d.csv"
             },
             {
                 "command" : "java -Dspark.local.dir=/mnt/spark,/mnt2/spark -Dspark-cores-max=18 -Dspark.executor.memory=6144m -cp /root/myjars/api-pipeline-assembly.jar com.petametrics.api.pipeline.jobs.LastXDaysLeaderBoardStats about {DATE}",
-                "datasets" : "doc_metrics/daily/about/{-6,0}/_SUCCESS"
+                "datasets" : "doc_metrics/daily/about/{-6,0}/_SUCCESS",
+                "output" : "dashboard/daily/about/{DATE}/leader_board_7d.json"
             }
         ]
     }
