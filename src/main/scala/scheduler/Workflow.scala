@@ -31,6 +31,12 @@ case class JobQueue(flows: mutable.ListBuffer[Workflow] = mutable.ListBuffer[Wor
     else Some(flows(pointer))
   }
 
+  def insert(wf: Workflow) {
+    this.synchronized {
+      flows.insert(pointer + 2, wf)
+    }
+  }
+
   def skipToNext() {
     this.synchronized {
       pointer += 1
@@ -46,6 +52,11 @@ case class Workflow(
   finished: mutable.Queue[Action] = mutable.Queue[Action](),
   remains: mutable.Queue[Action] = mutable.Queue[Action]()
 ) {
+
+  var status: String = Workflow.STATUS_NEW
+
+  var failedReason = ""
+
   def isExpired(): Boolean = expires.isBeforeNow()
 
   def shouldStart(): Boolean = startTime.isBeforeNow()
@@ -60,24 +71,29 @@ case class Workflow(
   }
 
   override def toString: String = {
-    val status = if (remains.length > 0) {
-      s"""
-        | JOB_STATUS:   FAILED
-        | DONE:         $finished
-        | REMAINS:      $remains""".stripMargin
-    } else {
-      """
-        | JOS_STATUS:  SUCCESS""".stripMargin
-    }
-
+    val fSize = finished.size
+    val rSize = remains.size
+    val remain = remains.headOption.getOrElse("")
+    val jStatus = if (status == Workflow.STATUS_FAILED) s"$status($failedReason)" else status
     s"""
       |================== WORKFLOW ==================
       | PROPERTY:     $property
       | START_TIME:   $startTime
-      | EXPIRES:      $expires$status
+      | EXPIRES:      $expires
+      | JOB_STATUS:   $jStatus
+      | DONE:         $fSize
+      | REMAINS:      $rSize ($remain)
       |==============================================
      """.stripMargin
   }
+}
+
+object Workflow {
+  val STATUS_NEW = "NEW"
+  val STATUS_RUNNING = "RUNNING"
+  val STATUS_SUCCESS = "SUCCESS"
+  val STATUS_FAILED = "FAILED"
+  val STATUS_WAITING = "WAITING"
 }
 
 case class Action(
@@ -88,11 +104,15 @@ case class Action(
   def dataAvailable: Boolean = {
     if (dataSets.length > 0) {
       dataSets.forall { dataPath =>
-        if (dataPath.endsWith("/*")) {
+        val exist = if (dataPath.endsWith("/*")) {
           S3Util.exists(dataPath.substring(0, dataPath.length - 2))
         } else{
           S3Util.exists(dataPath)
         }
+        if (!exist) {
+          PrintUtil("\""+dataPath+"\" not available.")
+        }
+        exist
       }
     } else {
       true
@@ -106,6 +126,9 @@ case class Action(
     true
   }
 
-  override def toString: String = command
+  override def toString: String = {
+    val idx = command.indexOf("com.petametrics.api.pipeline.") + "com.petametrics.api.pipeline.".length
+    command.substring(idx)
+  }
 }
 

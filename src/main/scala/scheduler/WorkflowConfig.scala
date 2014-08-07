@@ -15,7 +15,7 @@ case class WorkflowConfig(property: String, start: String, end: String, repeat: 
     val fmt = org.joda.time.format.DateTimeFormat.forPattern("dd-MM-YYYY kkmm").withZone(org.joda.time.DateTimeZone.forID("US/Pacific"))
     val startTime = fmt.parseDateTime(now)
 
-    if (startTime.minusHours(36).isAfterNow) None
+    if (startTime.minusHours(3).isAfterNow) None
     else {
       val expTime = if (startTime.isBeforeNow) DateTime.now.plusMinutes(expires) else startTime.plusMinutes(expires)
       val acts = scala.collection.mutable.Queue[Action]()

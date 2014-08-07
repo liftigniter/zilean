@@ -14,12 +14,6 @@ case object CreateJob
 case object CleanUp
 
 
-object Constants {
-  val RUNNING = "running"
-  val DONE = "done"
-  val WAITING = "waiting"
-}
-
 class ExecutorActor extends Actor with akka.actor.ActorLogging {
 
   def receive = {
@@ -29,42 +23,45 @@ class ExecutorActor extends Actor with akka.actor.ActorLogging {
       log.info("Job queue size: " + Global.jobQueue.flows.size)
       Global.jobQueue.current() match {
         case Some(wf) => {
-          log.info(wf.property)
-          // 0 = OK
-          // 1 = FAILED
-          // 2 = PENDING (data not available yet)
-          var status = 0
+
+          wf.status = Workflow.STATUS_RUNNING
 
           log.info("Should start? " + wf.shouldStart())
           if (!wf.shouldStart) {
-            status = 2
+            wf.status = Workflow.STATUS_WAITING
           }
           log.info("Expired? " + wf.isExpired())
           if (wf.isExpired) {
-            status = 1
-            log.error("JOB FAILED: Expired")
+            wf.status = Workflow.STATUS_FAILED
+            wf.failedReason = "Expired on " + wf.expires
           }
-          while(status == 0 && wf.remains.size > 0) {
+          while(wf.status == Workflow.STATUS_RUNNING && wf.remains.size > 0) {
             if (wf.remains.front.dataAvailable) {
-              log.info("Execute: " + wf.remains.front.command)
               val result = wf.remains.front.execute()
               if (result) {
                 wf.actionDone()
-                log.info("Remaining actions: " + wf.remains.size)
               } else {
-                status = 1
+                wf.status = Workflow.STATUS_FAILED
+                wf.failedReason = "Execute \"" + wf.remains.front.toString + "\" failed"
               }
             } else {
               log.info("Data not available!!")
-              status = 2
+              wf.status = Workflow.STATUS_WAITING
             }
           }
-          log.info(wf.toString)
-          // If workflow success or failed, remove from queue, otherwise pending it and move to next workflow in the queue
-          if (status == 0 || status == 1) Global.jobQueue.remove()
-          else Global.jobQueue.skipToNext()
-          // Send itself a message to run next job
-          if (status == 0) self ! RunJob
+
+          if (wf.status == Workflow.STATUS_RUNNING) {
+            wf.status = Workflow.STATUS_SUCCESS
+          }
+
+          if (wf.status == Workflow.STATUS_FAILED || wf.status == Workflow.STATUS_SUCCESS) {
+            log.info(wf.toString)
+            Global.jobQueue.remove()
+            self ! RunJob
+          } else {
+            Global.jobQueue.skipToNext()
+          }
+
         }
         case None => print("X")
       }
@@ -90,13 +87,19 @@ class JobManagerActor extends Actor with akka.actor.ActorLogging {
       }
     }
     case CleanUp => {
+      val actions = scala.collection.mutable.Queue[Action]()
       scala.io.Source.fromFile("/root/spark-ec2/slaves").getLines().foreach { line =>
         val host = line.trim
         val cmd = s"ssh $host rm -rf /root/spark/work/*"
-        log.info(s"running $cmd")
-        val result = CmdUtil.run(cmd)
-        log.info("success? " + result)
+        val act = Action(cmd, List())
+        actions.enqueue(act)
       }
+      val wf = Workflow(property =  "cleanup",
+        startTime = org.joda.time.DateTime.now.minusMinutes(10),
+        expires = org.joda.time.DateTime.now.plusHours(1),
+        remains = actions
+      )
+      Global.jobQueue.insert(wf)
     }
   }
 }
@@ -116,8 +119,6 @@ object Global {
 
 object AkkaScheduler extends App {
 
-  lazy val fmt = org.joda.time.format.DateTimeFormat.forPattern("dd-MM-YYYY kkmm").withZone(org.joda.time.DateTimeZone.forID("US/Pacific"))
-
   override def main(args: Array[String]) {
 
     println("Start akka job scheduler...")
@@ -131,7 +132,7 @@ object AkkaScheduler extends App {
     // Every 5 seconds send a ticker, and print a dot '.' on the screen
     system.scheduler.schedule(0.seconds, 5.seconds, executor, Ticker)
 
-    // Every 10 minutes send a RunJob message, actor run a job if available
+    // Every 1 minute send a RunJob message, actor run a job if available
     system.scheduler.schedule(30.seconds, 1.minutes, executor, RunJob)
 
     // Every 10 minutes send a CreateJob message, actor create a job if possible
@@ -140,9 +141,7 @@ object AkkaScheduler extends App {
     // Every 1 hour, clean up slave work log
     system.scheduler.schedule(1.hour, 1.hour, manager, CleanUp)
 
-    // Every hour check and add new workflow to queue
   }
-
 
 
 }

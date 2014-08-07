@@ -1,5 +1,6 @@
 package scheduler
 
+import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 /**
@@ -26,15 +27,20 @@ class JobQueueSpec extends FunSuite {
       dataSets = List("tmp/guan/READMEssss1.md")
     )
 
-    val action4 = Action(
-      command = "",
-      dataSets = List("new_activity/coderwall/27-07-2014/_SUCCESS")
-    )
+    val fmt = org.joda.time.format.DateTimeFormat.forPattern("dd-MM-YYYY").withZone(org.joda.time.DateTimeZone.forID("US/Pacific"))
+
+    val actConf = ActionConfig("echo", Some("dashboard/daily/about/{-6,0}/overview_stats_1d.csv"))
+
+    val action4 = actConf.toAction(fmt.parseDateTime("04-08-2014"))
+
+    println(action4.dataSets)
 
     assert(action1.dataAvailable, true)
     assert(action2.dataAvailable, true)
     assert(!action3.dataAvailable, true)
     assert(action4.dataAvailable, true)
+
+
 
   }
 }

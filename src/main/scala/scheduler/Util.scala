@@ -42,3 +42,9 @@ object CmdUtil {
       false
   }
 }
+
+object PrintUtil {
+  def apply(s: String) {
+    println("########\t" + s)
+  }
+}
