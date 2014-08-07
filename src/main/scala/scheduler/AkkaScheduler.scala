@@ -47,7 +47,6 @@ class ExecutorActor extends Actor with akka.actor.ActorLogging {
                   wf.failedReason = "Execute \"" + wf.remains.front.toString + "\" failed"
                 }
               } else {
-                log.info("Data not available!!")
                 wf.status = Workflow.STATUS_WAITING
               }
             }
